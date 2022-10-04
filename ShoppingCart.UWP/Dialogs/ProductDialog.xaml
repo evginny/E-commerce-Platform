@@ -1,0 +1,76 @@
+﻿<ContentDialog
+    x:Class="ShoppingCart.UWP.Dialogs.ProductDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ShoppingCart.UWP.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Add Product"
+    PrimaryButtonText="Ok"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <RadioButton Grid.Column="0" GroupName="ProductType" Content="By Quantity" IsChecked="{Binding Path=isQuantityProduct, Mode=TwoWay}"></RadioButton>
+            <RadioButton Grid.Column="1" GroupName="ProductType" Content="By Weight" IsChecked="{Binding Path=isWeightProduct, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Row="2"> <!-- Name -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Name"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Binding Path=Name, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Row="3"> <!-- Description -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Description"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Binding Path=Description, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Row="4"> <!-- Price -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Price"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Binding Path=Price, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Row="5"> <!-- Quantity -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Quantity" Visibility="{Binding Path=IsQuantityVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Binding Path=Quantity, Mode=TwoWay}" Visibility="{Binding Path=IsQuantityVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Grid Grid.Row="5">  <!-- Weight -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Weight" Visibility="{Binding Path=IsWeightVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Binding Path=Weight, Mode=TwoWay}" Visibility="{Binding Path=IsWeightVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Grid Grid.Row="1"> <!-- BoGo -->
+            <CheckBox x:Name="isBoGoCheckBox" Content="This product is Buy One Get One" Checked="isBoGoCheckBox_Checked" Unchecked="isBoGoCheckBox_Unchecked"></CheckBox>
+        </Grid>
+    </Grid>
+</ContentDialog>

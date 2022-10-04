@@ -1,0 +1,125 @@
+﻿<Page
+    x:Class="ShoppingCart.UWP.Pages.CartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ShoppingCart.UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="31"/>  <!-- 0) Return, Sign out -->
+            <RowDefinition Height="50"/>  <!-- 1) Check Out -->
+            <RowDefinition/>              <!-- 2) Save, load, Search, Sort -->
+            <RowDefinition Height="17*"/> <!-- 3) List -->
+            <RowDefinition/>              <!-- 4) Delete Product -->
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"> <!-- Return, Sign Out-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9.3*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Background="LightSlateGray"></Grid>
+            <Button Grid.Column="1" Content="Return" Background="Gold" HorizontalAlignment="Stretch" Click="Return_Click"></Button>
+            <Button Grid.Column="2" Content="Sign Out" Background="OrangeRed" HorizontalAlignment="Stretch" Click="SignOut_Click"></Button>
+        </Grid>
+        <Grid Grid.Row="1"> <!-- Check Out-->
+            <Button Content="Proceed To Checkout" Background="LightGreen" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="CheckOut_Click"></Button>
+        </Grid>
+        <Grid Grid.Row="2"> <!-- Save, Load, Search, and Sort -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="9.3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Save" HorizontalAlignment="Stretch" Click="Save_Click"></Button>
+                <Button Grid.Column="1" Content="Load" HorizontalAlignment="Stretch" Click="Load_Click"></Button>
+            </Grid>
+            <TextBox Grid.Column="1" Text="{Binding Path=Query, Mode=TwoWay}"></TextBox>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Search" HorizontalAlignment="Stretch" Click="Search_Click"></Button>
+                <ComboBox Margin="1" Grid.Column="1" Header="Sort" PlaceholderText="Sort By" SelectionChanged="CartSortComboBox_SelectionChanged" HorizontalAlignment="Stretch">
+                    <x:String>By Name ↑</x:String>
+                    <x:String>By Name ↓</x:String>
+                    <x:String>By Total Price ↑</x:String>
+                    <x:String>By Total Price ↓</x:String>
+                </ComboBox>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="3"> <!-- List -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100000"/>
+            </Grid.ColumnDefinitions>
+            <ListBox ItemsSource="{Binding Path=CartProducts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedProduct, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" FontSize="14" Text="{Binding Path=ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Name -->
+                                <TextBlock Grid.Column="0" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                <TextBlock Grid.Column="1">:&#160;</TextBlock>
+                                <!-- Description -->
+                                <TextBlock Grid.Column="2" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                <TextBlock Grid.Column="3">;&#160;$</TextBlock>
+                                <!-- Price -->
+                                <TextBlock Grid.Column="4" Text="{Binding Path=Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                <TextBlock Grid.Column="5">&#160;x&#160;</TextBlock>
+                                <!-- Quantity -->
+                                <TextBlock Grid.Column="6" Visibility="{Binding Path=IsQuantity}" Text="{Binding Path=Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                <!-- Weight -->
+                                <TextBlock Grid.Column="6" Visibility="{Binding Path=IsWeight}" Text="{Binding Path=Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                <TextBlock Grid.Column="7" Visibility="{Binding Path=IsQuantity}">&#160; unit(s)</TextBlock>
+                                <TextBlock Grid.Column="7" Visibility="{Binding Path=IsWeight}">&#160; lb</TextBlock>
+                                <TextBlock Grid.Column="8">&#160;=&#160;$</TextBlock>
+                                <!-- Total Price -->
+                                <TextBlock Grid.Column="9" Text="{Binding Path=TotalPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                <TextBlock Grid.Column="10">&#160;;&#160;</TextBlock>
+                                <!-- BoGo -->
+                                <TextBlock Grid.Column="11" Text="Buy One Get One" Visibility="{Binding Path=isBoGoShow}"></TextBlock>
+
+
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>    
+        </Grid>
+        <Grid Grid.Row="4"> <!-- Delete -->
+            <Button Content="Delete Product From The Cart" HorizontalAlignment="Stretch" Click="Delete_Click"></Button>
+        </Grid>
+    </Grid>
+</Page>

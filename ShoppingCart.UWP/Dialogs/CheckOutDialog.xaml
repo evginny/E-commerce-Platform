@@ -1,0 +1,52 @@
+﻿<ContentDialog
+    x:Class="ShoppingCart.UWP.Dialogs.CheckOutDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ShoppingCart.UWP.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Order Summary"
+    PrimaryButtonText="Proceed To Payment Method"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"> <!-- Subtotal -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Total before tax:"></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Right">$</TextBlock>
+            <TextBlock Grid.Column="2" Text="{Binding Path=Subtotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"></TextBlock>            
+        </Grid>
+        <Grid Grid.Row="1"> <!-- Tax Amount-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Estimated tax to be collected:"></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Right">$</TextBlock>
+            <TextBlock Grid.Column="2" Text="{Binding Path=TaxAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="2"> <!-- Total -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Order Total:" FontSize="20"></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Right" FontSize="20">$</TextBlock>
+            <TextBlock Grid.Column="2" FontSize="20" Text="{Binding Path=Total, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"></TextBlock>
+        </Grid>
+    </Grid>
+</ContentDialog>
